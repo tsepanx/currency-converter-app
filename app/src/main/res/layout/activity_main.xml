@@ -19,45 +19,44 @@
         android:id="@+id/field1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
         android:ems="10"
         android:hint="@string/field_placeholder"
         android:inputType="numberSigned"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcome"
 
-        android:onClick="onFieldClick"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/spinner"
+        app:layout_constraintTop_toBottomOf="@+id/welcome" />
 
     <EditText
         android:id="@+id/field2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="@dimen/field_padding"
+        android:layout_marginEnd="16dp"
         android:ems="10"
         android:hint="@string/field_placeholder"
         android:inputType="numberSigned"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/field1"
-
-        android:onClick="onFieldClick"/>
+        app:layout_constraintStart_toEndOf="@+id/spinner2"
+        app:layout_constraintTop_toBottomOf="@+id/field1" />
 
     <EditText
         android:id="@+id/field3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="@dimen/field_padding"
+        android:layout_marginEnd="16dp"
         android:ems="10"
         android:hint="@string/field_placeholder"
         android:inputType="numberSigned"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/field2"
-
-        android:onClick="onFieldClick"/>
+        app:layout_constraintStart_toEndOf="@+id/spinner3"
+        app:layout_constraintTop_toBottomOf="@+id/field2" />
 
     <Button
         android:id="@+id/convertBtn"
@@ -69,5 +68,39 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/field3" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="60dp"
+        android:entries="@array/currency_list"
+        app:layout_constraintEnd_toStartOf="@+id/field1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
+        android:entries="@array/currency_list"
+        android:spinnerMode="dropdown"
+        app:layout_constraintEnd_toStartOf="@+id/field2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+
+    <Spinner
+        android:id="@+id/spinner3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
+        android:entries="@array/currency_list"
+        app:layout_constraintEnd_toStartOf="@+id/field3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

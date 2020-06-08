@@ -9,6 +9,14 @@ import android.widget.Button
 import android.widget.TextView
 import java.util.logging.Logger
 
+const val baseCurrencyName = "DOLLAR"
+
+class Currency(val id: Int, private var valueToBaseCurrency: Float, var name: String) {
+    fun convertTo(currency: Currency): Float {
+        return this.valueToBaseCurrency / currency.valueToBaseCurrency
+    }
+}
+
 class MainActivity : AppCompatActivity() {
     private lateinit var firstField: TextView
     private lateinit var secondField: TextView
@@ -16,12 +24,19 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var lastEditedField: TextView
 
+    private lateinit var currencyMap: Map<TextView, Currency>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         firstField = findViewById(R.id.field1)
         secondField = findViewById(R.id.field2)
+
+        currencyMap = mapOf(
+            firstField to Currency(1, 74f, "RUB"),
+            secondField to Currency(2, 0.9f, "EUR")
+        )
 
         convertButton = findViewById(R.id.convertBtn)
 
@@ -40,13 +55,11 @@ class MainActivity : AppCompatActivity() {
         secondField.addTextChangedListener(defaultTextWatcher(secondField))
     }
 
-    fun onFieldClick(view: View) {
-//        val textView = view as TextView
-        Logger.getLogger("fdf").warning("Clicked ")
-//        view.text = "clicked"
-    }
-
     fun onConvert(view: View) {
-        secondField.text = firstField.text
+        val lastEditedText = lastEditedField.text.toString()
+
+        Logger.getLogger("convert").warning(lastEditedText)
+
+//        secondField.text = firstField.text
     }
 }
