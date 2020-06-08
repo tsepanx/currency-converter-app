@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">CurrencyConverter</string>
+
+    <string name="convert_btn_text">Convert</string>
+    <string name="welcome_message">Welcome to my currency converter!!!</string>
+    <string name="field_placeholder">Some value</string>
+</resources>
