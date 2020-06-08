@@ -38,7 +38,7 @@ class CurrencyFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = MyCurrencyRecyclerViewAdapter(DummyContent.ITEMS)
+                adapter = MyCurrencyAdapter(DummyContent.ITEMS)
             }
         }
         return view

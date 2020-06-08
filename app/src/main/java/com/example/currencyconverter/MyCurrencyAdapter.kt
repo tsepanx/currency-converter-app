@@ -12,9 +12,9 @@ import com.example.currencyconverter.dummy.DummyContent.DummyItem
  * [RecyclerView.Adapter] that can display a [DummyItem].
  * TODO: Replace the implementation with code for your data type.
  */
-class MyCurrencyRecyclerViewAdapter(
-    private val values: List<DummyItem>
-) : RecyclerView.Adapter<MyCurrencyRecyclerViewAdapter.ViewHolder>() {
+class MyCurrencyAdapter(private val values: List<DummyItem>) : RecyclerView.Adapter<MyCurrencyAdapter.ViewHolder>() {
+
+    override fun getItemCount(): Int = values.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -25,17 +25,16 @@ class MyCurrencyRecyclerViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
         holder.idView.text = item.id
-        holder.contentView.text = item.content
+        holder.nameView.text = item.content
     }
 
-    override fun getItemCount(): Int = values.size
-
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val idView: TextView = view.findViewById(R.id.item_number)
-        val contentView: TextView = view.findViewById(R.id.content)
+        val idView: TextView = view.findViewById(R.id.item_id)
+        val nameView: TextView = view.findViewById(R.id.name)
+        val inputView: TextView = view.findViewById(R.id.input)
 
         override fun toString(): String {
-            return super.toString() + " '" + contentView.text + "'"
+            return super.toString() + " ${nameView.text} ${inputView.text}"
         }
     }
 }
