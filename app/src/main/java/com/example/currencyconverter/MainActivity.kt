@@ -25,12 +25,18 @@ class Currency(val id: Int, private val valueToBaseCurrency: Float, val name: St
     }
 }
 
-val dollarCurrency = Currency(1, 1f, "USD", R.drawable.usd)
-val rusCurrency = Currency(2, 74f, "RUS", R.drawable.rub)
-val euroCurrency = Currency(3, 0.88f, "EUR", R.drawable.eur)
+val dollarCurrency = Currency(0, 1f, "USD", R.drawable.usd)
+val rusCurrency = Currency(1, 74f, "RUS", R.drawable.rub)
+val euroCurrency = Currency(2, 0.88f, "EUR", R.drawable.eur)
+
+val currencyList = listOf(
+    dollarCurrency,
+    rusCurrency,
+    euroCurrency
+)
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var inputField: TextView
+    private lateinit var inputView: TextView
     private lateinit var resultView: TextView
 
     private lateinit var ratioView: TextView
@@ -43,7 +49,7 @@ class MainActivity : AppCompatActivity() {
     private var fromCurrency: Currency = Currency()
         set(value) {
             fromImageView.setImageResource(value.img)
-            inputField.hint = value.name
+            inputView.hint = value.name
 
             field = value
         }
@@ -58,7 +64,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        inputField = findViewById(R.id.input_field)
+        inputView = findViewById(R.id.input_view)
         resultView = findViewById(R.id.result_view)
 
         ratioView = findViewById(R.id.currency_ratio)
@@ -111,7 +117,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onConvertClick(view: View) {
-        val amountFromValue = this.inputField.text.toString().toFloatOrNull()
+        val amountFromValue = this.inputView.text.toString().toFloatOrNull()
         convert(amountFromValue)
     }
 }

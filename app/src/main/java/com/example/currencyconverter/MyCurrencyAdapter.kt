@@ -4,14 +4,11 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
-
-import com.example.currencyconverter.dummy.DummyContent.DummyItem
 import java.util.logging.Logger
 
-var inputList: MutableList<TextView> = mutableListOf()
-
-class MyCurrencyAdapter(private val values: List<DummyItem>) : RecyclerView.Adapter<MyCurrencyAdapter.ViewHolder>() {
+class MyCurrencyAdapter(private val values: List<Currency>) : RecyclerView.Adapter<MyCurrencyAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int = values.size
 
@@ -23,8 +20,9 @@ class MyCurrencyAdapter(private val values: List<DummyItem>) : RecyclerView.Adap
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
-        holder.idView.text = item.id
-        holder.nameView.text = item.content
+        holder.idView.text = item.id.toString()
+        holder.nameView.text = item.name
+        holder.imgView.setImageResource(item.img)
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
@@ -34,6 +32,7 @@ class MyCurrencyAdapter(private val values: List<DummyItem>) : RecyclerView.Adap
 
         val idView: TextView = view.findViewById(R.id.id)
         val nameView: TextView = view.findViewById(R.id.name)
+        val imgView: ImageView = view.findViewById(R.id.flag_img)
 
         override fun onClick(v: View?) {
             Logger.getLogger("recycler view").warning(this.layoutPosition.toString())
