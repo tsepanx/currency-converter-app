@@ -38,18 +38,18 @@
             app:srcCompat="@drawable/ic_baseline_arrow_forward_24" />
 
         <ImageView
-            android:id="@+id/from_img"
+            android:id="@+id/left_img"
             android:layout_width="70dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="50dp"
+            android:layout_marginStart="50dp"
             android:onClick="onFlagClick"
             app:srcCompat="@drawable/usd" />
 
         <ImageView
-            android:id="@+id/to_img"
+            android:id="@+id/right_img"
             android:layout_width="70dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="270dp"
+            android:layout_marginStart="270dp"
             android:onClick="onFlagClick"
             app:srcCompat="@drawable/usd" />
     </androidx.cardview.widget.CardView>
@@ -59,7 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/small_margin"
-        android:text="USD"
+        android:text="@string/default_currency_name"
         android:textAlignment="center"
         android:textSize="36sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/input_view"

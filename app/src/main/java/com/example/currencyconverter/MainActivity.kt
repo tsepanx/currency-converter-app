@@ -3,12 +3,16 @@ package com.example.currencyconverter
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import java.util.logging.Logger
 import kotlin.math.round
+
+
+var selectedCurrency: Currency? = null
 
 fun Float.round(decimals: Int): Float {
     var multiplier = 1.0
@@ -23,6 +27,8 @@ class Currency(val id: Int, private val valueToBaseCurrency: Float, val name: St
     fun convertTo(currency: Currency): Float {
         return currency.valueToBaseCurrency / this.valueToBaseCurrency
     }
+
+    override fun toString(): String = "$name $valueToBaseCurrency"
 }
 
 val dollarCurrency = Currency(0, 1f, "USD", R.drawable.usd)
@@ -43,12 +49,14 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var convertButton: Button
 
-    private lateinit var fromImageView: ImageView
-    private lateinit var toImageView: ImageView
+    private lateinit var leftImageView: ImageView
+    private lateinit var rightImageView: ImageView
+
+    private var isLeftCurrencySelected: Boolean? = null
 
     private var fromCurrency: Currency = Currency()
         set(value) {
-            fromImageView.setImageResource(value.img)
+            leftImageView.setImageResource(value.img)
             inputView.hint = value.name
 
             field = value
@@ -56,8 +64,9 @@ class MainActivity : AppCompatActivity() {
 
     private var toCurrency: Currency = Currency()
         set(value) {
+            rightImageView.setImageResource(value.img)
+
             field = value
-            toImageView.setImageResource(value.img)
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,18 +80,25 @@ class MainActivity : AppCompatActivity() {
 
         convertButton = findViewById(R.id.convert_btn)
 
-        fromImageView = findViewById(R.id.from_img)
-        toImageView = findViewById(R.id.to_img)
+        leftImageView = findViewById(R.id.left_img)
+        rightImageView = findViewById(R.id.right_img)
 
-        fromCurrency = dollarCurrency
+        fromCurrency = dollarCurrency // TODO Hardcoded values
         toCurrency = euroCurrency
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
+
+        if (isLeftCurrencySelected != null && selectedCurrency != null) {
+            if (isLeftCurrencySelected as Boolean)
+                fromCurrency = selectedCurrency as Currency
+            else
+                toCurrency = selectedCurrency as Currency
+        }
+
 
         this.setRatioView()
-
         this.convert(0f)
     }
 
@@ -105,13 +121,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onFlagClick(view: View) {
-        val currency: Currency = if (view == fromImageView) fromCurrency else toCurrency
-        val currencyId = currency.id
-
-        Logger.getLogger("flag click").warning(currencyId.toString())
-
+        this.isLeftCurrencySelected = view == leftImageView
         val intent = Intent(this, CurrencyListActivity::class.java)
-        intent.putExtra("id", currencyId)
 
         startActivity(intent)
     }

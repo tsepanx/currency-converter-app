@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import java.util.logging.Logger
 
-class MyCurrencyAdapter(private val values: List<Currency>) : RecyclerView.Adapter<MyCurrencyAdapter.ViewHolder>() {
+class MyCurrencyAdapter(private val values: List<Currency>, val activity: CurrencyListActivity) : RecyclerView.Adapter<MyCurrencyAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int = values.size
 
@@ -20,7 +20,7 @@ class MyCurrencyAdapter(private val values: List<Currency>) : RecyclerView.Adapt
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
-        holder.idView.text = item.id.toString()
+
         holder.nameView.text = item.name
         holder.imgView.setImageResource(item.img)
     }
@@ -30,12 +30,15 @@ class MyCurrencyAdapter(private val values: List<Currency>) : RecyclerView.Adapt
             view.setOnClickListener(this)
         }
 
-        val idView: TextView = view.findViewById(R.id.id)
         val nameView: TextView = view.findViewById(R.id.name)
         val imgView: ImageView = view.findViewById(R.id.flag_img)
 
+        private val currency: Currency
+            get() = this@MyCurrencyAdapter.values[this.layoutPosition]
+
         override fun onClick(v: View?) {
-            Logger.getLogger("recycler view").warning(this.layoutPosition.toString())
+            selectedCurrency = this.currency
+            activity.onBackPressed()
         }
 
         override fun toString(): String {
