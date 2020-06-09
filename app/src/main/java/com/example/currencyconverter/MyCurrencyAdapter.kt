@@ -8,10 +8,8 @@ import android.widget.TextView
 
 import com.example.currencyconverter.dummy.DummyContent.DummyItem
 
-/**
- * [RecyclerView.Adapter] that can display a [DummyItem].
- * TODO: Replace the implementation with code for your data type.
- */
+var inputList: MutableList<TextView> = mutableListOf()
+
 class MyCurrencyAdapter(private val values: List<DummyItem>) : RecyclerView.Adapter<MyCurrencyAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int = values.size
@@ -31,7 +29,11 @@ class MyCurrencyAdapter(private val values: List<DummyItem>) : RecyclerView.Adap
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val idView: TextView = view.findViewById(R.id.item_id)
         val nameView: TextView = view.findViewById(R.id.name)
-        val inputView: TextView = view.findViewById(R.id.input)
+        private val inputView: TextView = view.findViewById(R.id.input)
+
+        init {
+            inputList.add(this.inputView)
+        }
 
         override fun toString(): String {
             return super.toString() + " ${nameView.text} ${inputView.text}"

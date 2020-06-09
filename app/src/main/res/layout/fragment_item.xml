@@ -17,7 +17,8 @@
             android:id="@+id/item_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceListItem" />
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/name"
