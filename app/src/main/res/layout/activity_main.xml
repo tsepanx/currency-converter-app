@@ -7,18 +7,18 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/convertBtn"
+        android:id="@+id/convert_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/big_margin"
-        android:onClick="onConvert"
+        android:onClick="onClick"
         android:text="@string/convert_btn_text"
         android:textAllCaps="false"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/currency_ratio" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_up"
@@ -36,15 +36,41 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:srcCompat="@drawable/ic_baseline_arrow_forward_24" />
+
+        <ImageView
+            android:id="@+id/from_img"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="50dp"
+            app:srcCompat="@drawable/usd" />
+
+        <ImageView
+            android:id="@+id/to_img"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="270dp"
+            app:srcCompat="@drawable/usd" />
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/result_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/small_margin"
+        android:text="RUS"
+        android:textAlignment="center"
+        android:textSize="36sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/input_field"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.77"
+        app:layout_constraintStart_toEndOf="@+id/input_field" />
+
+    <TextView
+        android:id="@+id/currency_ratio"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/big_margin"
         android:layout_marginHorizontal="@dimen/small_margin"
-        android:text="Result of convert"
+        android:layout_marginTop="@dimen/big_margin"
         android:textAlignment="center"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -54,16 +80,16 @@
 
     <EditText
         android:id="@+id/input_field"
-        android:layout_width="0dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/big_margin"
         android:layout_marginHorizontal="@dimen/small_margin"
+        android:layout_marginTop="@dimen/big_margin"
         android:ems="10"
-        android:hint="@string/field_placeholder"
-        android:inputType="numberSigned"
+        android:inputType="numberDecimal"
+        android:maxLength="6"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/card_up" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

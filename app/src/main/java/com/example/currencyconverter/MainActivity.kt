@@ -2,90 +2,104 @@ package com.example.currencyconverter
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.currencyconverter.dummy.DummyContent
 import java.util.logging.Logger
+import kotlin.math.round
 
-const val baseCurrencyName = "DOLLAR"
+fun Float.round(decimals: Int): Float {
+    var multiplier = 1.0
+    repeat(decimals) { multiplier *= 10 }
+    return (round(this * multiplier) / multiplier).toFloat()
+}
 
-class Currency(val id: Int, private var valueToBaseCurrency: Float, var name: String) {
+
+class Currency(val id: Int, private val valueToBaseCurrency: Float, val name: String, val img: Int) {
+    constructor() : this(0, 0f, "", 0)
+
     fun convertTo(currency: Currency): Float {
-        return this.valueToBaseCurrency / currency.valueToBaseCurrency
+        return currency.valueToBaseCurrency / this.valueToBaseCurrency
     }
 }
 
-class MainActivity : AppCompatActivity() {
-//    private lateinit var firstField: TextView
-//    private lateinit var convertButton: Button
-//
-//    private lateinit var lastEditedField: TextView
-//
-//    private lateinit var currencyMap: Map<TextView, Currenc
-//    private lateinit var secondField: TextViewy>
+val dollarCurrency = Currency(1, 1f, "USD", R.drawable.usd)
+val rusCurrency = Currency(2, 74f, "RUS", R.drawable.rub)
+val euroCurrency = Currency(3, 0.88f, "EUR", R.drawable.eur)
 
-    lateinit var recyclerView: RecyclerView
+class MainActivity : AppCompatActivity() {
+    private lateinit var inputField: TextView
+    private lateinit var resultView: TextView
+
+    private lateinit var ratioView: TextView
+
+    private lateinit var convertButton: Button
+
+    private lateinit var fromImageView: ImageView
+    private lateinit var toImageView: ImageView
+
+    private var fromCurrency: Currency = Currency()
+        set(value) {
+            field = value
+            fromImageView.setImageResource(value.img)
+        }
+
+    private var toCurrency: Currency = Currency()
+        set(value) {
+            field = value
+            toImageView.setImageResource(value.img)
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        firstField = findViewById(R.id.field1)
-//        secondField = findViewById(R.id.field2)
+        inputField = findViewById(R.id.input_field)
+        resultView = findViewById(R.id.result_view)
 
-//        currencyMap = mapOf(
-//            firstField to Currency(1, 74f, "RUB"),
-//            secondField to Currency(2, 0.9f, "EUR")
-//        )
+        ratioView = findViewById(R.id.currency_ratio)
 
-//        convertButton = findViewById(R.id.convertBtn)
-//
-//        lastEditedField = firstField
+        convertButton = findViewById(R.id.convert_btn)
 
-//        val defaultTextWatcher = { view: TextView ->  object : TextWatcher {
-//            override fun afterTextChanged(p0: Editable?) {
-//                lastEditedField = view
-//            }
-//
-//            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-//            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-//        }}
+        fromImageView = findViewById(R.id.from_img)
+        toImageView = findViewById(R.id.to_img)
 
-//        firstField.addTextChangedListener(defaultTextWatcher(firstField))
-//        secondField.addTextChangedListener(defaultTextWatcher(secondField))
-
-        val myDataset = listOf(
-            DummyContent.DummyItem("1", "RUB", ""),
-            DummyContent.DummyItem("2", "USD", ""),
-            DummyContent.DummyItem("3", "EUR", "")
-        )
-
-        val viewManager = LinearLayoutManager(this)
-        val viewAdapter = MyCurrencyAdapter(myDataset)
-
-
-        recyclerView = findViewById<RecyclerView>(R.id.main_list).apply {
-            setHasFixedSize(true)
-            layoutManager = viewManager
-            adapter = viewAdapter
-        }
-
+        fromCurrency = dollarCurrency
+        toCurrency = euroCurrency
     }
 
-    fun onConvert(view: View) {
-        val a = recyclerView.findViewHolderForAdapterPosition(1)
-        val b = a as MyCurrencyAdapter.ViewHolder
-        Logger.getLogger("list").warning(b.nameView.text.toString())
+    override fun onStart() {
+        super.onStart()
 
-//        val lastEditedText = lastEditedField.text.toString()
-//
-//        Logger.getLogger("convert").warning(lastEditedText)
-//
-////        secondField.text = firstField.text
+        this.setRatioView()
+        val currencies = 1
+
+        inputField.hint = fromCurrency.name
+
+        this.convert(0f)
+    }
+
+    private fun setRatioView() {
+        var ratio = fromCurrency.convertTo(toCurrency)
+        ratio = ratio.round(4)
+
+        ratioView.text = "1 ${fromCurrency.name} -> $ratio ${toCurrency.name}"
+    }
+
+    private fun convert(amount: Float?) {
+        if (amount != null) {
+            val amountToValue = fromCurrency.convertTo(toCurrency) * amount
+            Logger.getLogger("onConvert").warning("$amount $amountToValue")
+
+            this.resultView.text = amountToValue.toString()
+        } else {
+            resultView.text = 0f.toString()
+        }
+    }
+
+    fun onClick(view: View) {
+        val amountFromValue = this.inputField.text.toString().toFloatOrNull()
+        convert(amountFromValue)
     }
 }
