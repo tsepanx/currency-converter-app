@@ -21,8 +21,8 @@ fun Float.round(decimals: Int): Float {
 }
 
 
-class Currency(val id: Int, private val valueToBaseCurrency: Float, val name: String, val img: Int) {
-    constructor() : this(0, 0f, "", 0)
+class Currency(private val valueToBaseCurrency: Float, val name: String, val img: Int) {
+    constructor() : this(0f, "", 0)
 
     fun convertTo(currency: Currency): Float {
         return currency.valueToBaseCurrency / this.valueToBaseCurrency
@@ -31,9 +31,9 @@ class Currency(val id: Int, private val valueToBaseCurrency: Float, val name: St
     override fun toString(): String = "$name $valueToBaseCurrency"
 }
 
-val dollarCurrency = Currency(0, 1f, "USD", R.drawable.usd)
-val rusCurrency = Currency(1, 74f, "RUS", R.drawable.rub)
-val euroCurrency = Currency(2, 0.88f, "EUR", R.drawable.eur)
+val dollarCurrency = Currency( 1f, "USD", R.drawable.usd)
+val rusCurrency = Currency(74f, "RUS", R.drawable.rub)
+val euroCurrency = Currency(0.88f, "EUR", R.drawable.eur)
 
 val currencyList = listOf(
     dollarCurrency,
@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
 
     private var isLeftCurrencySelected: Boolean? = null
 
-    private var fromCurrency: Currency = Currency()
+    private var fromCurrency: Currency = Currency() // displayed as left currency
         set(value) {
             leftImageView.setImageResource(value.img)
             inputView.hint = value.name
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
             field = value
         }
 
-    private var toCurrency: Currency = Currency()
+    private var toCurrency: Currency = Currency() // displayed as right currency
         set(value) {
             rightImageView.setImageResource(value.img)
 
@@ -91,10 +91,10 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
 
         if (isLeftCurrencySelected != null && selectedCurrency != null) {
-            if (isLeftCurrencySelected as Boolean)
-                fromCurrency = selectedCurrency as Currency
+            if (isLeftCurrencySelected!!)
+                fromCurrency = selectedCurrency!!
             else
-                toCurrency = selectedCurrency as Currency
+                toCurrency = selectedCurrency!!
         }
 
 
