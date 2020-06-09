@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 
 import com.example.currencyconverter.dummy.DummyContent.DummyItem
+import java.util.logging.Logger
 
 var inputList: MutableList<TextView> = mutableListOf()
 
@@ -26,17 +27,20 @@ class MyCurrencyAdapter(private val values: List<DummyItem>) : RecyclerView.Adap
         holder.nameView.text = item.content
     }
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val idView: TextView = view.findViewById(R.id.item_id)
-        val nameView: TextView = view.findViewById(R.id.name)
-        private val inputView: TextView = view.findViewById(R.id.input)
-
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
         init {
-            inputList.add(this.inputView)
+            view.setOnClickListener(this)
+        }
+
+        val idView: TextView = view.findViewById(R.id.id)
+        val nameView: TextView = view.findViewById(R.id.name)
+
+        override fun onClick(v: View?) {
+            Logger.getLogger("recycler view").warning(this.layoutPosition.toString())
         }
 
         override fun toString(): String {
-            return super.toString() + " ${nameView.text} ${inputView.text}"
+            return super.toString() + " ${nameView.text}"
         }
     }
 }
