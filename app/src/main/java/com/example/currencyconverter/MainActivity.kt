@@ -3,16 +3,11 @@ package com.example.currencyconverter
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import java.util.logging.Logger
 import kotlin.math.round
-
-
-var selectedCurrency: Currency? = null
 
 fun Float.round(decimals: Int): Float {
     var multiplier = 1.0
@@ -20,12 +15,13 @@ fun Float.round(decimals: Int): Float {
     return (round(this * multiplier) / multiplier).toFloat()
 }
 
+class Currency(private val valueToBaseCurrency: Float, val name: String, val img: Int) { // Main class describes currency object
+    constructor() : this(0f, "", 0) // default constructor
 
-class Currency(private val valueToBaseCurrency: Float, val name: String, val img: Int) {
-    constructor() : this(0f, "", 0)
+    fun convertTo(currency: Currency, withAmount: Float? = null): Float {
+        val ratio = currency.valueToBaseCurrency / this.valueToBaseCurrency
 
-    fun convertTo(currency: Currency): Float {
-        return currency.valueToBaseCurrency / this.valueToBaseCurrency
+        return if (withAmount == null) ratio else ratio * withAmount
     }
 
     override fun toString(): String = "$name $valueToBaseCurrency"
@@ -52,7 +48,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var leftImageView: ImageView
     private lateinit var rightImageView: ImageView
 
-    private var isLeftCurrencySelected: Boolean? = null
+    private var isLeftFlagClicked: Boolean? = null // left or right currency that user is going to change
 
     private var fromCurrency: Currency = Currency() // displayed as left currency
         set(value) {
@@ -90,8 +86,8 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        if (isLeftCurrencySelected != null && selectedCurrency != null) {
-            if (isLeftCurrencySelected!!)
+        if (isLeftFlagClicked != null && selectedCurrency != null) {
+            if (isLeftFlagClicked!!)
                 fromCurrency = selectedCurrency!!
             else
                 toCurrency = selectedCurrency!!
@@ -99,7 +95,7 @@ class MainActivity : AppCompatActivity() {
 
 
         this.setRatioView()
-        this.convert(0f)
+        this.onConvert()
     }
 
     private fun setRatioView() {
@@ -109,26 +105,25 @@ class MainActivity : AppCompatActivity() {
         ratioView.text = "1 ${fromCurrency.name} -> $ratio ${toCurrency.name}"
     }
 
-    private fun convert(amount: Float?) {
+    private fun convertCurrentCurrencies(amount: Float?) {
         if (amount != null) {
-            val amountToValue = fromCurrency.convertTo(toCurrency) * amount
-            Logger.getLogger("onConvert").warning("$amount $amountToValue")
-
-            this.resultView.text = amountToValue.toString()
+            val resultOfConvert = fromCurrency.convertTo(toCurrency, amount)
+            this.resultView.text = resultOfConvert.toString()
         } else {
             resultView.text = 0f.toString()
         }
     }
 
     fun onFlagClick(view: View) {
-        this.isLeftCurrencySelected = view == leftImageView
-        val intent = Intent(this, CurrencyListActivity::class.java)
+        this.isLeftFlagClicked = view == leftImageView
 
-        startActivity(intent)
+        startActivity(Intent(this, CurrencyListActivity::class.java))
     }
 
-    fun onConvertClick(view: View) {
-        val amountFromValue = this.inputView.text.toString().toFloatOrNull()
-        convert(amountFromValue)
+    private fun onConvert() {
+        val inputValue = inputView.text.toString().toFloatOrNull()
+        convertCurrentCurrencies(inputValue)
     }
+
+    fun onConvertButtonClick(view: View) = onConvert()
 }
