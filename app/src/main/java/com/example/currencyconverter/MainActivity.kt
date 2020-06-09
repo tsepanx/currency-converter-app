@@ -1,5 +1,6 @@
 package com.example.currencyconverter
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -41,8 +42,10 @@ class MainActivity : AppCompatActivity() {
 
     private var fromCurrency: Currency = Currency()
         set(value) {
-            field = value
             fromImageView.setImageResource(value.img)
+            inputField.hint = value.name
+
+            field = value
         }
 
     private var toCurrency: Currency = Currency()
@@ -73,9 +76,6 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
 
         this.setRatioView()
-        val currencies = 1
-
-        inputField.hint = fromCurrency.name
 
         this.convert(0f)
     }
@@ -98,7 +98,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun onClick(view: View) {
+    fun onFlagClick(view: View) {
+        val currency: Currency = if (view == fromImageView) fromCurrency else toCurrency
+        val currencyId = currency.id
+
+        Logger.getLogger("flag click").warning(currencyId.toString())
+
+        val intent = Intent(this, CurrencyListActivity::class.java)
+        intent.putExtra("id", currencyId)
+
+        startActivity(intent)
+    }
+
+    fun onConvertClick(view: View) {
         val amountFromValue = this.inputField.text.toString().toFloatOrNull()
         convert(amountFromValue)
     }
