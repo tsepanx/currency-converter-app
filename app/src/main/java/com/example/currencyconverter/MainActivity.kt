@@ -28,13 +28,17 @@ class Currency(private val valueToBaseCurrency: Float, val name: String, val img
 }
 
 val dollarCurrency = Currency( 1f, "USD", R.drawable.usd)
-val rusCurrency = Currency(74f, "RUS", R.drawable.rub)
+val rubleCurrency = Currency(74f, "RUS", R.drawable.rub)
 val euroCurrency = Currency(0.88f, "EUR", R.drawable.eur)
+val poundCurrency = Currency(0.78f, "GBP", R.drawable.gbp)
+val yuanCurrency = Currency(7.07f, "CNY", R.drawable.cny)
 
 val currencyList = listOf(
     dollarCurrency,
-    rusCurrency,
-    euroCurrency
+    rubleCurrency,
+    euroCurrency,
+    poundCurrency,
+    yuanCurrency
 )
 
 class MainActivity : AppCompatActivity() {
