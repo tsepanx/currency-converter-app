@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-var selectedCurrency: Currency? = null // A Currency that was selected in list of currencies
+var selectedCurrency: Currency? = null
 
 class CurrencyListActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView

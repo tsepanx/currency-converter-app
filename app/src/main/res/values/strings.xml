@@ -3,10 +3,4 @@
 
     <string name="convert_btn_text">Convert</string>
     <string name="default_currency_name">AAA</string>
-
-    <string-array name="currency_list">
-        <item>Dollar</item>
-        <item>Euro</item>
-        <item>Ruble</item>
-    </string-array>
 </resources>

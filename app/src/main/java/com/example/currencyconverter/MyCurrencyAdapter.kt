@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import java.util.logging.Logger
 
 class MyCurrencyAdapter(private val values: List<Currency>, val activity: CurrencyListActivity) : RecyclerView.Adapter<MyCurrencyAdapter.ViewHolder>() {
 
