@@ -23,7 +23,7 @@ enum class CURRENCIES(val currency: Currency) {
     CANADIAN_DOLLAR(Currency(1.33f, "CAD", R.drawable.cad)),
     YUAN(Currency(7.07f, "CNY", R.drawable.cny)),
     LEV(Currency(1.73f, "BGN", R.drawable.bgn)),
-    BITCOIN(Currency(0.0001f, "BTC", R.drawable.bitcoin))
+    BITCOIN(Currency(0.0001f, "BTC", R.drawable.btc))
 }
 
 fun currenciesList(): List<Currency> = CURRENCIES.values().map { it.currency }
