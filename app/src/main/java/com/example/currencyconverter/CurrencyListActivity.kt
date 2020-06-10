@@ -14,8 +14,10 @@ class CurrencyListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_currency_list)
 
+        val currenciesData = currenciesList()
+
         val viewManager = LinearLayoutManager(this)
-        val viewAdapter = MyCurrencyAdapter(currencyList, this)
+        val viewAdapter = MyCurrencyAdapter(currenciesData, this)
 
         recyclerView = findViewById<RecyclerView>(R.id.list).apply {
             setHasFixedSize(true)

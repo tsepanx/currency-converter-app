@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     private var isLeftFlagClicked: Boolean? = null // left or right currency that user is going to change
 
-    private var fromCurrency: Currency = Currency() // displayed as left currency
+    private var fromCurrency: Currency = CURRENCIES.DOLLAR.currency // displayed as left currency
         set(value) {
             leftImageView.setImageResource(value.img)
             inputView.hint = value.name
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
             field = value
         }
 
-    private var toCurrency: Currency = Currency() // displayed as right currency
+    private var toCurrency: Currency =  CURRENCIES.EURO.currency // displayed as right currency
         set(value) {
             rightImageView.setImageResource(value.img)
 
@@ -56,9 +56,6 @@ class MainActivity : AppCompatActivity() {
 
         leftImageView = findViewById(R.id.left_img)
         rightImageView = findViewById(R.id.right_img)
-
-        fromCurrency = dollarCurrency // TODO Hardcoded values
-        toCurrency = euroCurrency
     }
 
     override fun onResume() {

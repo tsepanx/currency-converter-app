@@ -33,7 +33,7 @@ class MyCurrencyAdapter(private val values: List<Currency>, val activity: Curren
         val imgView: ImageView = view.findViewById(R.id.flag_img)
 
         private val currency: Currency
-            get() = this@MyCurrencyAdapter.values[this.layoutPosition]
+            get() = this@MyCurrencyAdapter.values[layoutPosition]
 
         override fun onClick(v: View?) {
             selectedCurrency = this.currency
