@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     private var fromCurrency: Currency = CURRENCIES.DOLLAR.currency // displayed as left currency
         set(value) {
             leftImageView.setImageResource(value.img)
-            inputView.hint = value.name
+            inputView.hint = value.code
 
             field = value
         }
@@ -75,9 +75,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun setRatioView() {
         var ratio = fromCurrency.convertTo(toCurrency)
-        ratio = ratio.round(4)
+        ratio = ratio.round(5)
 
-        ratioView.text = "1 ${fromCurrency.name} -> $ratio ${toCurrency.name}"
+        ratioView.text = "1 ${fromCurrency.code} -> $ratio ${toCurrency.code}"
     }
 
     private fun convertCurrentCurrencies(amount: Float?) {

@@ -20,7 +20,7 @@ class MyCurrencyAdapter(private val values: List<Currency>, val activity: Curren
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
 
-        holder.nameView.text = item.name
+        holder.nameView.text = item.code
         holder.imgView.setImageResource(item.img)
     }
 

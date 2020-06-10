@@ -2,7 +2,7 @@ package com.example.currencyconverter
 
 class Currency(
     private val ratioToBaseCurrency: Float, // Base currency is dollar
-    val name: String,
+    val code: String,
     val img: Int
 ) {
 
@@ -12,7 +12,7 @@ class Currency(
         return if (withAmount == null) ratio else ratio * withAmount
     }
 
-    override fun toString(): String = "$name $ratioToBaseCurrency"
+    override fun toString(): String = "$code $ratioToBaseCurrency"
 }
 
 enum class CURRENCIES(val currency: Currency) {
@@ -20,7 +20,10 @@ enum class CURRENCIES(val currency: Currency) {
     EURO(Currency(0.88f, "EUR", R.drawable.eur)),
     RUBLE(Currency(74f, "RUS", R.drawable.rub)),
     POUND(Currency(0.78f, "GBP", R.drawable.gbp)),
-    YUAN(Currency(7.07f, "CNY", R.drawable.cny));
+    CANADIAN_DOLLAR(Currency(1.33f, "CAD", R.drawable.cad)),
+    YUAN(Currency(7.07f, "CNY", R.drawable.cny)),
+    LEV(Currency(1.73f, "BGN", R.drawable.bgn)),
+    BITCOIN(Currency(0.0001f, "BTC", R.drawable.bitcoin))
 }
 
 fun currenciesList(): List<Currency> = CURRENCIES.values().map { it.currency }
