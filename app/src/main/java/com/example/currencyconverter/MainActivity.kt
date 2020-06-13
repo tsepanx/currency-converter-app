@@ -26,9 +26,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var leftImageView: ImageView
     private lateinit var rightImageView: ImageView
 
-    private var isLeftFlagClicked: Boolean? = null // left or right currency that user is going to change
+    private var isLeftFlagClicked: Boolean? =
+        null // left or right currency that user is going to change
 
-    private var fromCurrency: Currency = CURRENCIES.DOLLAR.currency // displayed as left currency
+    private var fromCurrency: Currency = Currency() // displayed as left currency
         set(value) {
             leftImageView.setImageResource(value.img)
             inputView.hint = value.code
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity() {
             field = value
         }
 
-    private var toCurrency: Currency =  CURRENCIES.EURO.currency // displayed as right currency
+    private var toCurrency: Currency = Currency() // displayed as right currency
         set(value) {
             rightImageView.setImageResource(value.img)
 
@@ -61,13 +62,20 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        if (isLeftFlagClicked != null && selectedCurrency != null) {
-            if (isLeftFlagClicked!!)
-                fromCurrency = selectedCurrency!!
-            else
-                toCurrency = selectedCurrency!!
+        if (isLeftFlagClicked != null) {
+            if (selectedCurrency != null) {
+                if (isLeftFlagClicked == true)
+                    fromCurrency = selectedCurrency!!
+                else
+                    toCurrency = selectedCurrency!!
+
+                selectedCurrency = null
+            }
         }
 
+
+        this.fromCurrency = CURRENCIES.EURO.currency
+        this.toCurrency = CURRENCIES.RUBLE.currency
 
         this.setRatioView()
         this.onConvert()

@@ -6,6 +6,8 @@ class Currency(
     val img: Int
 ) {
 
+    constructor() : this(0f, "", 0)
+
     fun convertTo(currency: Currency, withAmount: Float? = null): Float {
         val ratio = currency.ratioToBaseCurrency / this.ratioToBaseCurrency
 
@@ -26,4 +28,4 @@ enum class CURRENCIES(val currency: Currency) {
     BITCOIN(Currency(0.0001f, "BTC", R.drawable.btc))
 }
 
-fun currenciesList(): List<Currency> = CURRENCIES.values().map { it.currency }
+val currenciesList: List<Currency> = CURRENCIES.values().map { it.currency }
