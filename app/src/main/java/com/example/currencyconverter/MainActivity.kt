@@ -15,6 +15,8 @@ fun Float.round(decimals: Int): Float {
     return (round(this * multiplier) / multiplier).toFloat()
 }
 
+fun ratioText(ratio: Float, fromCode: String, toCode: String) = "1 $fromCode -> $ratio $toCode"
+
 class MainActivity : AppCompatActivity() {
     private lateinit var inputView: TextView
     private lateinit var resultView: TextView
@@ -86,7 +88,7 @@ class MainActivity : AppCompatActivity() {
         var ratio = fromCurrency.convertTo(toCurrency)
         ratio = ratio.round(5)
 
-        ratioView.text = "1 ${fromCurrency.code} -> $ratio ${toCurrency.code}"
+        ratioView.text = ratioText(ratio, fromCurrency.code, toCurrency.code)
     }
 
     private fun convertCurrentCurrencies(amount: Float?) {
