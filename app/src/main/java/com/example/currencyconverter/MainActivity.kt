@@ -59,23 +59,24 @@ class MainActivity : AppCompatActivity() {
         rightImageView = findViewById(R.id.right_img)
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        this.fromCurrency = CURRENCIES.EURO.currency
+        this.toCurrency = CURRENCIES.RUBLE.currency
+    }
+
     override fun onResume() {
         super.onResume()
 
         if (isLeftFlagClicked != null) {
             if (selectedCurrency != null) {
                 if (isLeftFlagClicked == true)
-                    fromCurrency = selectedCurrency!!
-                else
-                    toCurrency = selectedCurrency!!
+                    fromCurrency = selectedCurrency!! else toCurrency = selectedCurrency!!
 
                 selectedCurrency = null
             }
         }
-
-
-        this.fromCurrency = CURRENCIES.EURO.currency
-        this.toCurrency = CURRENCIES.RUBLE.currency
 
         this.setRatioView()
         this.onConvert()
